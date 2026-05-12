@@ -1,6 +1,5 @@
 import React from "react";
 import { Controller } from "react-hook-form";
-// react-quill replaced with native textarea (react-quill not in dependencies)
 
 const TextEditorField = ({
   name,
@@ -32,12 +31,20 @@ const TextEditorField = ({
             value={field.value || defaultValue}
             onChange={(e) => field.onChange(e.target.value)}
             rows={6}
-            className="w-full px-3 py-2 text-sm rounded-md outline-none resize-vertical"
+            className="w-full px-3 py-2 text-sm rounded-md outline-none resize-vertical transition-all duration-200"
             style={{
               border: "1px solid var(--pink-soft)",
               backgroundColor: "rgba(255, 255, 255, 0.95)",
-              boxShadow: "0 2px 8px rgba(249, 168, 212, 0.1)",
               color: "var(--text-primary)",
+              boxShadow: "0 2px 8px rgba(5, 117, 97, 0.08)",
+            }}
+            onFocus={(e) => {
+              e.target.style.border = "1px solid var(--purple-soft)";
+              e.target.style.boxShadow = "0 0 0 3px rgba(189, 186, 6, 0.15)";
+            }}
+            onBlur={(e) => {
+              e.target.style.border = "1px solid var(--pink-soft)";
+              e.target.style.boxShadow = "0 2px 8px rgba(5, 117, 97, 0.08)";
             }}
           />
         )}

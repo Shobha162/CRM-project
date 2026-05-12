@@ -3,7 +3,8 @@ import { useForm, Controller, useFieldArray } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
-import ReactQuill from "react-quill";
+import ReactQuill from "react-quill-new";
+import "react-quill-new/dist/quill.snow.css";
 import CircularProgress from "@mui/material/CircularProgress";
 
 import {
@@ -16,7 +17,7 @@ import BackButton from "../../Common/fields/BackButton";
 import InputField from "../../Common/fields/InputField";
 import GradientButton from "../../Common/GradientButton";
 import GradientLoader from "../../Common/GradientLoader";
-import AllTasksCustomer from "./AllTasksCustomer";
+import AllTaskCustomer from "./AllTasksCustomer";
 
 const EditCustomer = () => {
   const { id } = useParams();
@@ -138,29 +139,67 @@ const EditCustomer = () => {
     ],
   };
 
-  const sectionStyle = { borderColor: "var(--pink-soft)" };
-  const rowStyle = {
-    backgroundColor: "rgba(255, 241, 242, 0.5)",
+  // ── Theme styles (App.css variables se) ──────────────────────
+  const sectionStyle = {
     border: "1px solid var(--pink-soft)",
+    borderRadius: "0.5rem",
+    padding: "1rem",
   };
+
+  const rowStyle = {
+    backgroundColor: "rgba(5, 117, 97, 0.05)",
+    border: "1px solid var(--pink-soft)",
+    borderRadius: "0.375rem",
+    padding: "0.5rem",
+    marginBottom: "0.5rem",
+    display: "flex",
+    alignItems: "center",
+    gap: "0.5rem",
+  };
+
   const inputStyle = {
     border: "1px solid var(--pink-soft)",
     color: "var(--text-primary)",
-    backgroundColor: "rgba(255, 255, 255, 0.8)",
+    backgroundColor: "rgba(255, 255, 255, 0.9)",
+    padding: "0.5rem 0.75rem",
+    borderRadius: "0.375rem",
+    fontSize: "0.875rem",
+    flex: 1,
+    outline: "none",
   };
+
   const removeStyle = {
-    backgroundColor: "var(--red-soft)",
-    color: "var(--text-primary)",
-    border: "1px solid var(--red-soft)",
+    background: "var(--red-soft)",
+    color: "#fff",
+    border: "none",
+    borderRadius: "9999px",
+    padding: "0.25rem 0.5rem",
+    fontSize: "0.75rem",
+    fontWeight: "bold",
+    cursor: "pointer",
+    transition: "transform 0.15s",
   };
+
+  const sectionHeadingStyle = {
+    color: "var(--text-primary)",
+    fontSize: "1.125rem",
+    fontWeight: "700",
+  };
+
+  const quillStyle = {
+    border: "1px solid var(--pink-soft)",
+    backgroundColor: "rgba(255,255,255,0.95)",
+    borderRadius: "0.375rem",
+  };
+  // ─────────────────────────────────────────────────────────────
 
   if (loading && !customerData) {
     return (
-      <PageCont>
+      <PageCount>
         <div className="flex justify-center py-10">
-          <CircularProgress />
+          <CircularProgress style={{ color: "var(--pink-soft)" }} />
         </div>
-      </PageCont>
+      </PageCount>
     );
   }
 
@@ -183,18 +222,10 @@ const EditCustomer = () => {
         onSubmit={handleSubmit(onSubmit)}
         className="grid grid-cols-1 md:grid-cols-3 gap-4"
       >
-        {/* Names */}
-        <div
-          className="col-span-full border rounded-lg p-4"
-          style={sectionStyle}
-        >
+        {/* ── Names ── */}
+        <div className="col-span-full" style={sectionStyle}>
           <div className="flex items-center justify-between mb-3">
-            <h2
-              className="text-lg font-bold"
-              style={{ color: "var(--text-primary)" }}
-            >
-              Name of the Party
-            </h2>
+            <h2 style={sectionHeadingStyle}>Name of the Party</h2>
             <GradientButton
               type="button"
               onClick={() => appendName({ name: "" })}
@@ -204,21 +235,15 @@ const EditCustomer = () => {
             </GradientButton>
           </div>
           {nameFields.map((field, index) => (
-            <div
-              key={field.id}
-              className="flex items-center gap-2 mb-2 p-2 rounded"
-              style={rowStyle}
-            >
+            <div key={field.id} style={rowStyle}>
               <input
                 {...register(`names.${index}.name`)}
                 placeholder={`Enter name ${index + 1}`}
-                className="flex-1 px-3 py-2 rounded text-sm"
                 style={inputStyle}
               />
               <button
                 type="button"
                 onClick={() => removeName(index)}
-                className="font-bold text-xs px-2 py-1.5 rounded-full hover:scale-105 transition"
                 style={removeStyle}
                 title="Remove"
               >
@@ -228,18 +253,10 @@ const EditCustomer = () => {
           ))}
         </div>
 
-        {/* Phones */}
-        <div
-          className="col-span-full border rounded-lg p-4 mt-6"
-          style={sectionStyle}
-        >
+        {/* ── Phones ── */}
+        <div className="col-span-full mt-4" style={sectionStyle}>
           <div className="flex items-center justify-between mb-3">
-            <h2
-              className="text-lg font-bold"
-              style={{ color: "var(--text-primary)" }}
-            >
-              Phone Numbers
-            </h2>
+            <h2 style={sectionHeadingStyle}>Phone Numbers</h2>
             <GradientButton
               type="button"
               onClick={() => appendPhone({ number: "" })}
@@ -249,21 +266,15 @@ const EditCustomer = () => {
             </GradientButton>
           </div>
           {phoneFields.map((field, index) => (
-            <div
-              key={field.id}
-              className="flex items-center gap-2 mb-2 p-2 rounded"
-              style={rowStyle}
-            >
+            <div key={field.id} style={rowStyle}>
               <input
                 {...register(`phones.${index}.number`)}
                 placeholder={`Enter phone number ${index + 1}`}
-                className="flex-1 px-3 py-2 rounded text-sm"
                 style={inputStyle}
               />
               <button
                 type="button"
                 onClick={() => removePhone(index)}
-                className="font-bold text-xs px-2 py-1.5 rounded-full hover:scale-105 transition"
                 style={removeStyle}
                 title="Remove"
               >
@@ -273,18 +284,10 @@ const EditCustomer = () => {
           ))}
         </div>
 
-        {/* Emails */}
-        <div
-          className="col-span-full border rounded-lg p-4 mt-6"
-          style={sectionStyle}
-        >
+        {/* ── Emails ── */}
+        <div className="col-span-full mt-4" style={sectionStyle}>
           <div className="flex items-center justify-between mb-3">
-            <h2
-              className="text-lg font-bold"
-              style={{ color: "var(--text-primary)" }}
-            >
-              Email Addresses
-            </h2>
+            <h2 style={sectionHeadingStyle}>Email Addresses</h2>
             <GradientButton
               type="button"
               onClick={() => appendEmail({ email: "" })}
@@ -294,22 +297,16 @@ const EditCustomer = () => {
             </GradientButton>
           </div>
           {emailFields.map((field, index) => (
-            <div
-              key={field.id}
-              className="flex items-center gap-2 mb-2 p-2 rounded"
-              style={rowStyle}
-            >
+            <div key={field.id} style={rowStyle}>
               <input
                 {...register(`emails.${index}.email`)}
                 placeholder={`Enter email ${index + 1}`}
-                className="flex-1 px-3 py-2 rounded text-sm"
-                style={inputStyle}
                 type="email"
+                style={inputStyle}
               />
               <button
                 type="button"
                 onClick={() => removeEmail(index)}
-                className="font-bold text-xs px-2 py-1.5 rounded-full hover:scale-105 transition"
                 style={removeStyle}
                 title="Remove"
               >
@@ -319,18 +316,10 @@ const EditCustomer = () => {
           ))}
         </div>
 
-        {/* Addresses Array */}
-        <div
-          className="col-span-full border rounded-lg p-4 mt-6"
-          style={sectionStyle}
-        >
+        {/* ── Addresses ── */}
+        <div className="col-span-full mt-4" style={sectionStyle}>
           <div className="flex items-center justify-between mb-3">
-            <h2
-              className="text-lg font-bold"
-              style={{ color: "var(--text-primary)" }}
-            >
-              Addresses
-            </h2>
+            <h2 style={sectionHeadingStyle}>Addresses</h2>
             <GradientButton
               type="button"
               onClick={() => appendAddress({ address: "" })}
@@ -342,10 +331,9 @@ const EditCustomer = () => {
           {addressFields.map((field, index) => (
             <div
               key={field.id}
-              className="flex items-start gap-2 mb-2 p-2 rounded"
-              style={rowStyle}
+              style={{ ...rowStyle, alignItems: "flex-start" }}
             >
-              <div className="flex-1">
+              <div style={{ flex: 1 }}>
                 <Controller
                   name={`addresses.${index}.address`}
                   control={control}
@@ -356,10 +344,7 @@ const EditCustomer = () => {
                       theme="snow"
                       modules={quillModules}
                       placeholder={`Enter address ${index + 1}`}
-                      style={{
-                        border: "1px solid var(--pink-soft)",
-                        backgroundColor: "rgba(255,255,255,0.9)",
-                      }}
+                      style={quillStyle}
                     />
                   )}
                 />
@@ -367,8 +352,7 @@ const EditCustomer = () => {
               <button
                 type="button"
                 onClick={() => removeAddress(index)}
-                className="font-bold text-xs px-2 py-1.5 rounded-full hover:scale-105 transition mt-2"
-                style={removeStyle}
+                style={{ ...removeStyle, marginTop: "0.5rem" }}
                 title="Remove"
               >
                 ✕
@@ -377,7 +361,7 @@ const EditCustomer = () => {
           ))}
         </div>
 
-        {/* Source */}
+        {/* ── Source ── */}
         <InputField
           type="select"
           label="Source"
@@ -399,7 +383,7 @@ const EditCustomer = () => {
           ]}
         />
 
-        {/* GST */}
+        {/* ── GST ── */}
         <InputField
           type="text"
           label="GST No."
@@ -409,7 +393,7 @@ const EditCustomer = () => {
           errors={errors}
         />
 
-        {/* Submit */}
+        {/* ── Submit ── */}
         <div className="col-span-full">
           <GradientButton type="submit" disabled={isSubmitting}>
             {isSubmitting ? (
@@ -424,7 +408,7 @@ const EditCustomer = () => {
         </div>
       </form>
 
-      <AllTasksCustomer />
+      <AllTaskCustomer />
     </PageCount>
   );
 };

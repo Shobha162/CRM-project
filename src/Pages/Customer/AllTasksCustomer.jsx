@@ -37,7 +37,7 @@ const AllTasksCustomer = () => {
 
       try {
         setLoading(true);
-        const res = await API.get(`/crystal-customer/getID/${id}`);
+        const res = await API.get(`/w-customer/getID/${id}`);
         const tasks = res.data?.tasks || [];
 
         // Only set if tasks exist
