@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+/* ============================================================
+   CSS Variables — Theme Tokens
+   Login.jsx aur baaki saare components inhi variables use karte hain
+   ============================================================ */
+:root {
+  /* Brand colors */
+  --pink-soft: #057561;
+  --purple-soft: #bdba06;
+  --red-soft: #9706cb;
+  --gradient-primary: linear-gradient(135deg, #18575f, #cdcd3d);
+
+  /* Text */
+  --text-primary: #1e293b;
+
+  /* Legacy variables (Login.jsx use karta hai) */
+  --color-textColor: #1e293b;
+  --color-hoverColor: #3b924f;
+  --color-buttonColor: #6366f1;
+  --color-backgroundMid: #3b4263;
+}
+
+/* Dark theme (future use ke liye ready) */
+.dark {
+  --text-primary: #f1f5f9;
+  --color-textColor: #f1f5f9;
+  --color-backgroundMid: #1e2230;
+}

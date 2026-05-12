@@ -1,0 +1,8 @@
+.uploads-field::-webkit-scrollbar {
+  width: 6px;
+}
+
+.uploads-field::-webkit-scrollbar-thumb {
+  background-color: var(--pink-soft);
+  border-radius: 8px;
+}

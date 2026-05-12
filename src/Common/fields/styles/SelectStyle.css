@@ -1,0 +1,40 @@
+.custom-multi-select .ant-select-selector {
+  width: 100% !important;
+  padding: 0.275rem 0.625rem;
+  color: var(--text-primary) !important;
+  font-size: 0.875rem !important;
+  font-family: "Poppins", sans-serif !important;
+  background-color: rgba(255, 255, 255, 0.9) !important; /* ✅ background shorthand hata ke sirf background-color rakha */
+  font-weight: 500 !important;
+  outline: none !important;
+  font-style: normal !important;
+  border: 1px solid var(--pink-soft) !important;
+  border-radius: 2px;
+  line-height: 1.5 !important;
+  height: 100% !important;
+  box-shadow: 0 1px 6px rgba(249, 168, 212, 0.08) !important;
+}
+
+.custom-multi-select.ant-select-disabled .ant-select-selector {
+  background-color: rgba(255, 241, 242, 0.5) !important;
+}
+
+.ant-select-dropdown {
+  z-index: 10000 !important;
+}
+
+/* ✅ Fix: ::placeholder selector remove kiya — ant-select-selector ek div hai, 
+   uspe ::placeholder kaam nahi karta. Sirf .ant-select-selection-placeholder rakha */
+.custom-multi-select .ant-select-selector .ant-select-selection-placeholder {
+  font-family: "Poppins" !important;
+  font-size: 0.875rem !important;
+  line-height: 1.5 !important;
+  font-weight: 500 !important;
+  color: var(--pink-soft) !important;
+  font-style: normal !important;
+}
+
+.custom-multi-select .ant-select-arrow {
+  margin-top: -5px !important;
+  color: var(--pink-soft) !important;
+}

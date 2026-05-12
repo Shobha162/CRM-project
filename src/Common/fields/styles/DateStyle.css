@@ -1,0 +1,20 @@
+.custom-date.ant-picker-disabled {
+  background-color: rgba(255, 241, 242, 0.5) !important;
+  border-radius: 6px !important;
+}
+
+.custom-date.ant-picker-disabled .ant-picker-input input {
+  color: var(--text-primary) !important;
+}
+
+.custom-date .ant-picker-input input::placeholder {
+  color: var(--pink-soft) !important;
+}
+
+.custom-date .ant-picker-input .ant-picker-suffix .anticon.anticon-calendar {
+  color: var(--pink-soft) !important;
+}
+
+.ant-picker-dropdown {
+  z-index: 10000 !important;
+}
