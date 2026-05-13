@@ -15,11 +15,10 @@ const SelectField = ({
   labelClass = "",
   parentClass = "",
   disabled = false,
-  mode = "multiple",
+  mode = undefined, // ✅ FIXED: "multiple" tha — undefined kiya, Ant Design default single select use karega
   onSelectChange = function () {},
+  defaultValue,
 }) => {
-  // ✅ Fix: document.querySelector ki jagah containerRef use karo
-  // Warna page pe multiple selects hone par galat element ka border change hoga
   const containerRef = useRef(null);
 
   const setFocusStyle = () => {
@@ -64,17 +63,26 @@ const SelectField = ({
         <Controller
           control={control}
           name={name}
+          // ✅ FIXED: defaultValue sirf tab pass karo jab defined ho
+          {...(defaultValue !== undefined ? { defaultValue } : {})}
           render={({ field: { onChange, value } }) => (
             <Select
               id={name}
-              mode={mode}
+              // ✅ FIXED: mode sirf "multiple" ya "tags" pe pass karo
+              // undefined hone se Ant Design automatically single select mode use karta hai
+              {...(mode === "multiple" || mode === "tags" ? { mode } : {})}
               showSearch
               allowClear
               placeholder={placeholder}
               onChange={(selectedValue) => {
-                onChange(selectedValue);
+                // ✅ FIXED: Array aa jaye toh string mein convert karo
+                // Ant Design kabhi kabhi single select mein bhi array return karta hai
+                const val = Array.isArray(selectedValue)
+                  ? selectedValue[0] ?? ""
+                  : selectedValue;
+                onChange(val);
                 if (onSelectChange) {
-                  onSelectChange(selectedValue);
+                  onSelectChange(val);
                 }
               }}
               disabled={disabled}

@@ -48,7 +48,7 @@ const TextField = ({
             name={name}
             control={control}
             className="bg-transparent w-full"
-            defaultValue={defaultValue}
+           {...(defaultValue !== undefined ? { defaultValue } : {})} 
             render={({ field }) => (
               <input
                 id={name}

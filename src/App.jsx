@@ -17,6 +17,9 @@ const EditEmployee = lazy(() => import ("./Pages/Employee/EditEmployee"));
 const AddCustomer = lazy(() => import ("./Pages/Customer/AddCustomer"));
 const AllCustomers = lazy(() => import ("./Pages/Customer/AllCustomers"));
 const EditCustomer = lazy(() => import ("./Pages/Customer/EditCustomer"));
+const AllProducts = lazy(() => import ("./Pages/Products/AllProducts"));
+const AddProduct = lazy(() => import ("./Pages/Products/AddProduct"));
+const EditProduct = lazy(() => import ("./Pages/Products/EditProduct"));
 
 
 
@@ -79,6 +82,11 @@ function App() {
               <Route path="employees" element={<AllEmployees />} />
               <Route path="add-employee" element={<AddEmployee />} />
               <Route path="edit-employee/:id" element={<EditEmployee />} />
+
+                    {/* Products */}
+              <Route path="products" element={<AllProducts />} />
+              <Route path="add-product" element={<AddProduct />} />
+              <Route path="edit-product/:id" element={<EditProduct />} />
 
             
           </Route>

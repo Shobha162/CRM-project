@@ -68,6 +68,10 @@ const Sidebar = ({
         icon: <UserRound size={20} />,
         text: "Employee",
       },
+      { to: `/${role}/products`, 
+      icon: <Package size={18} />, 
+      text: "Product" },
+      
     ],
 
     user: [
@@ -82,6 +86,9 @@ const Sidebar = ({
         icon: <UserCircle size={20} />,
         text: "Customers",
       },
+       { to: `/${role}/products`,
+        icon: <Package size={18} />,
+         text: "Product" },
 
       ...(superAdminRight
         ? [
