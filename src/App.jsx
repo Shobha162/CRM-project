@@ -20,6 +20,9 @@ const EditCustomer = lazy(() => import ("./Pages/Customer/EditCustomer"));
 const AllProducts = lazy(() => import ("./Pages/Products/AllProducts"));
 const AddProduct = lazy(() => import ("./Pages/Products/AddProduct"));
 const EditProduct = lazy(() => import ("./Pages/Products/EditProduct"));
+const AllSupplier = lazy(() => import ("./Pages/Supplier/AllSupplier"));
+const AddSupplier = lazy(() => import ("./Pages/Supplier/AddSupplier"));
+const EditSupplier = lazy(() => import ("./Pages/Supplier/EditSupplier"));
 
 
 
@@ -87,6 +90,11 @@ function App() {
               <Route path="products" element={<AllProducts />} />
               <Route path="add-product" element={<AddProduct />} />
               <Route path="edit-product/:id" element={<EditProduct />} />
+
+                {/* Suppliers */}
+              <Route path="suppliers" element={<AllSupplier />} />
+              <Route path="add-supplier" element={<AddSupplier />} />
+              <Route path="edit-supplier/:id" element={<EditSupplier />} />
 
             
           </Route>

@@ -17,6 +17,7 @@ import employeeReducer from "./Empoloyee/employeeSlice";
 import authReducer from "./Auth/authSlice";
 import customerReducer from "./Customer/customerSlice";
 import productReducer from "./Product/productSlice";
+import supplierReducer from "./Supplier/supplierSlice";
 
 
 const persistConfig = {
@@ -28,6 +29,7 @@ const persistConfig = {
         "customerMaster",
         "employeeMaster",
         "dashboard",
+        "supplierMaster"
     ]
 };
 
@@ -37,6 +39,7 @@ const rootReducer = combineReducers({
     employeeMaster: employeeReducer,
     customerMaster: customerReducer,
     productMaster: productReducer,
+    supplierMaster: supplierReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

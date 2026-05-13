@@ -71,6 +71,11 @@ const Sidebar = ({
       { to: `/${role}/products`, 
       icon: <Package size={18} />, 
       text: "Product" },
+      {
+        to: `/${role}/suppliers`,
+        icon: <StoreIcon size={18} />,
+        text: "Supplier",
+      },
       
     ],
 
