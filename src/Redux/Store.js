@@ -18,19 +18,20 @@ import authReducer from "./Auth/authSlice";
 import customerReducer from "./Customer/customerSlice";
 import productReducer from "./Product/productSlice";
 import supplierReducer from "./Supplier/supplierSlice";
-
+import taskReducer from "./Task/taskSlice";           
+import notificationReducer from "./Notification/notificationSlice"; 
 
 const persistConfig = {
     key: "root",
     storage,
-    // ✅ productMaster whitelist se hata diya — blob URLs persist nahi honi chahiye
     whitelist: [
         "auth",
         "customerMaster",
         "employeeMaster",
         "dashboard",
-        "supplierMaster"
-    ]
+        "supplierMaster",
+        
+    ],
 };
 
 const rootReducer = combineReducers({
@@ -40,6 +41,8 @@ const rootReducer = combineReducers({
     customerMaster: customerReducer,
     productMaster: productReducer,
     supplierMaster: supplierReducer,
+    taskMaster: taskReducer,           
+    notification: notificationReducer, 
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -50,14 +53,11 @@ export const store = configureStore({
         getDefaultMiddleware({
             serializableCheck: {
                 ignoredActions: [
-                    // redux-persist ke actions
                     FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER,
-                    // ✅ image actions ignore karo (blob URL non-serializable hota hai)
                     "productMaster/setLocalImage",
                     "productMaster/uploadProductImage/fulfilled",
                     "productMaster/fetchProductImage/fulfilled",
                 ],
-                // ✅ images state path ignore karo
                 ignoredPaths: [
                     "productMaster.images",
                 ],

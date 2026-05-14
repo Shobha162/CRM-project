@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronDown, ChevronUp } from "lucide-react";
-import { setTaskData } from "../redux/task/taskSlice";
+import { setTaskData } from "../Redux/Task/taskSlice";
 
 const NotificationWidget = () => {
   const dispatch = useDispatch();
