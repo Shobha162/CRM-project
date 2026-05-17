@@ -61,6 +61,11 @@ const Sidebar = ({
         { to: `/${role}/products`,   icon: <Package size={18} />,         text: "Product" },
         { to: `/${role}/suppliers`,  icon: <StoreIcon size={18} />,       text: "Supplier" },
         { to: `/${role}/tasks`,      icon: <ClipboardList size={18} />,   text: "Tasks" },  // ✅ ADDED
+        {
+        to: `/${role}/purchase-order`,
+        icon: <FileText size={18} />,
+        text: "Purchase Orders",
+      },
       ],
 
       user: [
@@ -68,6 +73,11 @@ const Sidebar = ({
         { to: `/${role}/customers`,  icon: <UserCircle size={20} />,      text: "Customers" },
         { to: `/${role}/products`,   icon: <Package size={18} />,         text: "Product" },
         { to: `/${role}/tasks`,      icon: <ClipboardList size={18} />,   text: "Tasks" },  // ✅ ADDED
+        {
+        to: `/${role}/purchase-order`,
+        icon: <FileText size={18} />,
+        text: "Purchase Orders",
+      },
         ...(superAdminRight
           ? [{ to: `/${role}/suppliers`, icon: <StoreIcon size={20} />, text: "Supplier" }]
           : []
