@@ -6,7 +6,7 @@ import { Plus, Hash, Trash2 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { pdf } from "@react-pdf/renderer";
 
-import PageCont from "../../Common/PageCont";
+import PageCount from "../../Common/PageCount";
 import Heading from "../../Common/Heading";
 import BackButton from "../../Common/fields/BackButton";
 import { tableStyle } from "../../Common/fields/tableStyle";
@@ -386,7 +386,7 @@ const AllPurchaseOrders = () => {
   };
 
   return (
-    <PageCont>
+    <PageCount>
       <div className="flex flex-col gap-3 mb-3">
         {/* First Row: Heading + Search + Buttons */}
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
@@ -500,7 +500,7 @@ const AllPurchaseOrders = () => {
         onSave={handleVoucherUpdate}
       />
       {/* <PurchaseOrderPDF /> */}
-    </PageCont>
+    </PageCount>
   );
 };
 

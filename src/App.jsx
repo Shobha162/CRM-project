@@ -29,6 +29,9 @@ const EditSupplier = lazy(() => import("./Pages/Supplier/EditSupplier"));
 const AllTasks = lazy(() => import("./Pages/Tasks/AllTasks"));
 const AddTask = lazy(() => import("./Pages/Tasks/AddTask"));
 const EditTask = lazy(() => import("./Pages/Tasks/EditTask"));
+const AllPurchaseOrders = lazy(() => import("./Pages/PurchaseOrder/AllPurchaseOrders"));
+const CreatePurchaseOrder = lazy(() => import("./Pages/PurchaseOrder/CreatePurchaseOrder"));
+const EditPurchaseOrder = lazy(() => import("./Pages/PurchaseOrder/EditPurchaseOrder"));
 
 function App() {
   const dispatch = useDispatch();
@@ -61,9 +64,6 @@ function App() {
     }
   }, [dispatch, navigate]);
 
-  // ✅ FIX: isAuthenticated (boolean/primitive) dependency use karo — object nahi
-  // Pehle `user` object tha — har render pe naya reference = infinite loop risk
-  // Ab boolean hai — sirf login/logout hone par hi effect dobara chalega
   useEffect(() => {
     if (!isAuthenticated) return;
 
@@ -120,6 +120,17 @@ function App() {
               <Route path="tasks" element={<AllTasks />} />
               <Route path="add-task" element={<AddTask />} />
               <Route path="edit-task/:id" element={<EditTask />} />
+
+               {/* Purchase Orders */}
+              <Route path="purchase-order" element={<AllPurchaseOrders />} />
+              <Route
+                path="create-purchase-order"
+                element={<CreatePurchaseOrder />}
+              />
+              <Route
+                path="edit-purchase-order/:id"
+                element={<EditPurchaseOrder />}
+              />
             </Route>
           </Route>
         </Routes>
