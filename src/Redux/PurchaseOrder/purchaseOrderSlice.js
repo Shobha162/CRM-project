@@ -8,7 +8,7 @@ export const getAllPurchaseOrders = createAsyncThunk(
   "purchaseOrder/getAll",
   async (_, { rejectWithValue }) => {
     try {
-      const res = await API.get("/crystal-purchase/getAll");
+      const res = await API.get("/w-purchase/getall");
       console.log("📦 All Purchase Orders:", res.data);
       return res.data.data;
     } catch (err) {
@@ -25,7 +25,7 @@ export const createPurchaseOrder = createAsyncThunk(
   "purchaseOrder/create",
   async (formData, { rejectWithValue }) => {
     try {
-      const res = await API.post("/crystal-purchase/create", formData, {
+      const res = await API.post("/w-purchase/", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       toast.success("Purchase Order Created");
@@ -92,7 +92,7 @@ export const getSinglePurchaseOrder = createAsyncThunk(
   "purchaseOrder/getSingle",
   async (id, { rejectWithValue }) => {
     try {
-      const res = await API.get(`/crystal-purchase/get/${id}`);
+      const res = await API.get(`/w-purchase/getID/${id}`);
       return res.data.data;
     } catch (err) {
       toast.error(
@@ -105,7 +105,7 @@ export const getSinglePurchaseOrder = createAsyncThunk(
 
 // Update Purchase Order (like updatePerforma)
 export const updatePurchaseOrder = createAsyncThunk(
-  "purchaseOrder/update",
+  "/w-purchase/update/:id",
   async ({ id, formData }, { rejectWithValue }) => {
     try {
       // Ensure formData is FormData instance
@@ -141,7 +141,7 @@ export const deletePurchaseOrder = createAsyncThunk(
   "purchaseOrder/delete",
   async (id, { rejectWithValue }) => {
     try {
-      const res = await API.post("/crystal-purchase/delete", { id });
+      const res = await API.post(`/w-purchase/delete/${id}`, { id });
       toast.success(res.data?.message || "Purchase Order deleted successfully");
       return id;
     } catch (err) {
