@@ -18,8 +18,10 @@ import authReducer from "./Auth/authSlice";
 import customerReducer from "./Customer/customerSlice";
 import productReducer from "./Product/productSlice";
 import supplierReducer from "./Supplier/supplierSlice";
-import taskReducer from "./Task/taskSlice";           
-import notificationReducer from "./Notification/notificationSlice"; 
+import taskReducer from "./Task/taskSlice";
+import notificationReducer from "./Notification/notificationSlice";
+import purchaseOrderReducer from "./PurchaseOrder/purchaseOrderSlice";
+import proformaReducer from "./Performa/proformaSlice";
 
 const persistConfig = {
     key: "root",
@@ -41,8 +43,10 @@ const rootReducer = combineReducers({
     customerMaster: customerReducer,
     productMaster: productReducer,
     supplierMaster: supplierReducer,
-    taskMaster: taskReducer,           
-    notification: notificationReducer, 
+    taskMaster: taskReducer,
+    notification: notificationReducer,
+    purchaseOrder: purchaseOrderReducer,
+    performa: proformaReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
