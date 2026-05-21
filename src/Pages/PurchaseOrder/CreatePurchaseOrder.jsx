@@ -3,14 +3,15 @@ import { useForm, Controller, useWatch } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import toast from "react-hot-toast";
-import ReactQuill from "react-quill";
+import ReactQuill from "react-quill-new";
+import "react-quill-new/dist/quill.snow.css";
 import { pdf } from "@react-pdf/renderer";
 import PurchaseOrderPDF from "./PurchaseOrderPDF";
 import {
   createPurchaseOrder,
   incrementVoucher,
 } from "../../Redux/PurchaseOrder/purchaseOrderSlice";
-import PageCont from "../../Common/PageCont";
+import PageCount from "../../Common/PageCount";
 import Heading from "../../Common/Heading";
 import BackButton from "../../Common/fields/BackButton";
 import InputField from "../../Common/fields/InputField";
@@ -48,6 +49,21 @@ export const quillFormats = [
 ];
 
 const stripTags = (html) => html?.replace(/<\/?[^>]+(>|$)/g, "") || "";
+
+// ✅ HTML entities bhi decode karta hai — &nbsp; &amp; etc.
+const decodeHtml = (html) => {
+  if (!html) return "";
+  return html
+    .replace(/<[^>]*>/g, "")   // HTML tags hata do
+    .replace(/&nbsp;/g, " ")   // non-breaking space → normal space
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/\s+/g, " ")      // multiple spaces → single space
+    .trim();
+};
 
 const CreatePurchaseOrder = () => {
   const navigate = useNavigate();
@@ -102,7 +118,7 @@ const CreatePurchaseOrder = () => {
     name: "selectedBillAddress",
   });
 
-  // Default ship to
+  // Default ship to — sirf ek baar set karo (getValues use karo, watch nahi)
   useEffect(() => {
     const defaultShipTo = `<p><strong>Crystal Ion Engineers</strong></p>
 <p>Plot No.-138</p>
@@ -112,10 +128,11 @@ const CreatePurchaseOrder = () => {
 <p>GSTIN/UIN : 06AAHPJ5618GIZT</p>
 <p>India - 121004</p>`;
 
-    if (!watch("shipTo") || watch("shipTo").trim() === "") {
+    const current = control._getWatch("shipTo");
+    if (!current || current.trim() === "" || current === "<p><br></p>") {
       setValue("shipTo", defaultShipTo);
     }
-  }, [setValue, watch]);
+  }, []); // ✅ sirf mount pe ek baar
 
   // Supplier change — autofill name, phone, gst, reset address dropdowns
   useEffect(() => {
@@ -326,11 +343,11 @@ const CreatePurchaseOrder = () => {
   const addressOptions =
     selectedSupplier?.addresses?.map((a) => ({
       value: a.address,
-      label: a.address?.replace(/<[^>]*>?/gm, "").slice(0, 80) || "Address",
+      label: decodeHtml(a.address).slice(0, 80) || "Address",
     })) || [];
 
   return (
-    <PageCont>
+    <PageCount>
       <div className="flex justify-between items-center mb-4">
         <div className="flex items-center gap-3">
           <BackButton />
@@ -459,8 +476,9 @@ const CreatePurchaseOrder = () => {
                   defaultValue=""
                   render={({ field }) => (
                     <ReactQuill
-                      {...field}
+                      value={field.value || ""}
                       onChange={(val) => field.onChange(val)}
+                      onBlur={field.onBlur}
                       theme="snow"
                       modules={quillModules}
                       formats={quillFormats}
@@ -478,20 +496,42 @@ const CreatePurchaseOrder = () => {
               </div>
 
               <div>
-                <label
-                  className="block font-semibold text-sm mb-1"
-                  style={{ color: "var(--text-primary)" }}
-                >
-                  Ship To Address (Our Company)
-                </label>
+                <div className="flex justify-between items-center mb-1">
+                  <label
+                    className="block font-semibold text-sm"
+                    style={{ color: "var(--text-primary)" }}
+                  >
+                    Ship To Address (Our Company)
+                  </label>
+                  {/* ✅ Reset to default button */}
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setValue(
+                        "shipTo",
+                        `<p><strong>Crystal Ion Engineers</strong></p><p>Plot No.-138</p><p>Sector-3</p><p>Ballabhgarh, Faridabad</p><p>Haryana</p><p>GSTIN/UIN : 06AAHPJ5618GIZT</p><p>India - 121004</p>`,
+                      )
+                    }
+                    className="text-xs px-2 py-1 rounded"
+                    style={{
+                      color: "var(--text-secondary)",
+                      border: "1px solid var(--pink-soft)",
+                      backgroundColor: "transparent",
+                      cursor: "pointer",
+                    }}
+                  >
+                    ↺ Reset Default
+                  </button>
+                </div>
                 <Controller
                   name="shipTo"
                   control={control}
                   defaultValue=""
                   render={({ field }) => (
                     <ReactQuill
-                      {...field}
+                      value={field.value || ""}
                       onChange={(val) => field.onChange(val)}
+                      onBlur={field.onBlur}
                       theme="snow"
                       modules={quillModules}
                       formats={quillFormats}
@@ -588,8 +628,9 @@ const CreatePurchaseOrder = () => {
                           defaultValue={product?.description || ""}
                           render={({ field }) => (
                             <ReactQuill
-                              {...field}
-                              onChange={field.onChange}
+                              value={field.value || ""}
+                              onChange={(val) => field.onChange(val)}
+                              onBlur={field.onBlur}
                               theme="snow"
                               modules={quillModules}
                               formats={quillFormats}
@@ -709,8 +750,9 @@ const CreatePurchaseOrder = () => {
                   Terms of Delivery
                 </label>
                 <ReactQuill
-                  {...field}
+                  value={field.value || ""}
                   onChange={(val) => field.onChange(val)}
+                  onBlur={field.onBlur}
                   theme="snow"
                   modules={quillModules}
                   formats={quillFormats}
@@ -751,7 +793,7 @@ const CreatePurchaseOrder = () => {
           </GradientButton>
         </div>
       </form>
-    </PageCont>
+    </PageCount>
   );
 };
 
